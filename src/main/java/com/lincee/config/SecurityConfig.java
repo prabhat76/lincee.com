@@ -19,12 +19,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-            .csrf(csrf -> csrf.disable())
-            .cors(cors -> cors.configurationSource(corsConfigurationSource))
-            .headers(headers -> headers
-                .frameOptions().disable()
-                .contentTypeOptions().disable());
+        http
+            .cors() // 🔥 THIS IS THE KEY LINE
+            .and()
+            .csrf().disable()
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll()
+            );
+
         return http.build();
     }
 }
