@@ -30,7 +30,7 @@ public class AuthController {
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping("/login")
-    @Operation(summary = "User login", description = "Authenticate user and return JWT token")
+    @Operation(summary = "User login", description = "Authenticate user and return JWT token with role information")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Login successful"),
         @ApiResponse(responseCode = "401", description = "Invalid credentials")
@@ -44,14 +44,28 @@ public class AuthController {
             User user = userOpt.get();
             // Validate password
             if (passwordEncoder.matches(password, user.getPassword())) {
-                String token = jwtService.generateToken(email);
+                // Generate token with role information
+                String token = jwtService.generateToken(user.getUsername(), user.getRole().name(), user.getId());
+                
                 Map<String, Object> response = new HashMap<>();
                 response.put("token", token);
                 response.put("type", "Bearer");
-                response.put("email", email);
                 response.put("userId", user.getId());
                 response.put("username", user.getUsername());
+                response.put("email", user.getEmail());
+                response.put("role", user.getRole().name());
+                response.put("isAdmin", user.getRole() == User.Role.ADMIN);
+                response.put("firstName", user.getFirstName());
+                response.put("lastName", user.getLastName());
                 response.put("message", "Login successful");
+                
+                // Add specific redirect information
+                if (user.getRole() == User.Role.ADMIN) {
+                    response.put("redirectTo", "/admin/dashboard");
+                } else {
+                    response.put("redirectTo", "/");
+                }
+                
                 return ResponseEntity.ok(response);
             }
         }
@@ -99,16 +113,19 @@ public class AuthController {
         
         User savedUser = userRepository.save(newUser);
         
-        // Generate token for auto-login
-        String token = jwtService.generateToken(email);
+        // Generate token for auto-login with role information
+        String token = jwtService.generateToken(savedUser.getUsername(), savedUser.getRole().name(), savedUser.getId());
         
         Map<String, Object> response = new HashMap<>();
         response.put("message", "User registered successfully");
         response.put("userId", savedUser.getId());
         response.put("username", savedUser.getUsername());
         response.put("email", savedUser.getEmail());
+        response.put("role", savedUser.getRole().name());
+        response.put("isAdmin", false);
         response.put("token", token);
         response.put("type", "Bearer");
+        response.put("redirectTo", "/");
         return ResponseEntity.ok(response);
     }
 
