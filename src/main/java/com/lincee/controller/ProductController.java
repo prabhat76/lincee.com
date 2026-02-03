@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
-@CrossOrigin(origins = "*")
 @Tag(name = "Product Management", description = "APIs for managing streetwear products")
 public class ProductController {
 
