@@ -21,7 +21,8 @@ public class CorsConfig {
             "http://localhost:4200",
             "http://localhost:8080",
             "https://linceecom-production.up.railway.app",
-            "http://linceecom-production.up.railway.app"
+            "http://linceecom-production.up.railway.app",
+            "https://lincee-ui.vercel.app"
         ));
         
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
