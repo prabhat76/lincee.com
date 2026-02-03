@@ -8,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users", indexes = {
@@ -58,7 +60,20 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    
+
+    // Relationships
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
+    private Cart cart;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Address> addresses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Review> reviews = new ArrayList<>();
+
     public enum Role {
         CUSTOMER, ADMIN, MODERATOR
     }
@@ -105,4 +120,17 @@ public class User {
     
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    // Relationship getters and setters
+    public Cart getCart() { return cart; }
+    public void setCart(Cart cart) { this.cart = cart; }
+
+    public List<Order> getOrders() { return orders; }
+    public void setOrders(List<Order> orders) { this.orders = orders; }
+
+    public List<Address> getAddresses() { return addresses; }
+    public void setAddresses(List<Address> addresses) { this.addresses = addresses; }
+
+    public List<Review> getReviews() { return reviews; }
+    public void setReviews(List<Review> reviews) { this.reviews = reviews; }
 }

@@ -13,6 +13,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByBrand(String brand);
     List<Product> findByActiveTrue();
     List<Product> findByFeaturedTrue();
+    Long countByActiveTrue();
     
     @Query("SELECT p FROM Product p WHERE p.name LIKE %?1% OR p.description LIKE %?1%")
     List<Product> searchProducts(String keyword);

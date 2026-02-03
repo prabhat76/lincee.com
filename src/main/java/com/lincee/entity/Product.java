@@ -91,7 +91,17 @@ public class Product {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    
+
+    // Relationships
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
+    private List<CartItem> cartItems = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Review> reviews = new ArrayList<>();
+
     // Constructors
     public Product() {}
     
@@ -159,4 +169,14 @@ public class Product {
     
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    // Relationship getters and setters
+    public List<OrderItem> getOrderItems() { return orderItems; }
+    public void setOrderItems(List<OrderItem> orderItems) { this.orderItems = orderItems; }
+
+    public List<CartItem> getCartItems() { return cartItems; }
+    public void setCartItems(List<CartItem> cartItems) { this.cartItems = cartItems; }
+
+    public List<Review> getReviews() { return reviews; }
+    public void setReviews(List<Review> reviews) { this.reviews = reviews; }
 }
