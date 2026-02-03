@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/v1/products")
 @Tag(name = "Product Management", description = "APIs for managing streetwear products")
 public class ProductController {
 

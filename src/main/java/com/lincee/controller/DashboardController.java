@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/dashboard")
+@RequestMapping("/api/v1/dashboard")
 @Tag(name = "Dashboard Analytics", description = "APIs for admin dashboard analytics and statistics")
 public class DashboardController {
     

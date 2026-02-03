@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/payments")
+@RequestMapping("/api/v1/payments")
 @Tag(name = "Payment Management", description = "APIs for managing payments")
 public class PaymentController {
     

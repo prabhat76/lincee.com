@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/api/v1/cart")
 @Tag(name = "Shopping Cart", description = "APIs for managing shopping cart")
 public class CartController {
     

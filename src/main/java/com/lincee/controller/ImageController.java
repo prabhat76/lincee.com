@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/images")
+@RequestMapping("/api/v1/images")
 @Tag(name = "Image Upload", description = "Upload and manage product images")
 public class ImageController {
 

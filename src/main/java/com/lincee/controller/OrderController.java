@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/v1/orders")
 @Tag(name = "Order Management", description = "APIs for managing orders")
 public class OrderController {
     

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/addresses")
+@RequestMapping("/api/v1/addresses")
 @Tag(name = "Address Management", description = "APIs for managing user addresses")
 public class AddressController {
     
