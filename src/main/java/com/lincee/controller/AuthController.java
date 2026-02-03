@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -25,6 +26,8 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping("/login")
     @Operation(summary = "User login", description = "Authenticate user and return JWT token")
@@ -36,17 +39,21 @@ public class AuthController {
         String email = credentials.get("email");
         String password = credentials.get("password");
         
-        Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent()) {
-            String token = jwtService.generateToken(email);
-            Map<String, Object> response = new HashMap<>();
-            response.put("token", token);
-            response.put("type", "Bearer");
-            response.put("email", email);
-            response.put("userId", user.get().getId());
-            response.put("username", user.get().getUsername());
-            response.put("message", "Login successful");
-            return ResponseEntity.ok(response);
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            // Validate password
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                String token = jwtService.generateToken(email);
+                Map<String, Object> response = new HashMap<>();
+                response.put("token", token);
+                response.put("type", "Bearer");
+                response.put("email", email);
+                response.put("userId", user.getId());
+                response.put("username", user.getUsername());
+                response.put("message", "Login successful");
+                return ResponseEntity.ok(response);
+            }
         }
         
         Map<String, Object> errorResponse = new HashMap<>();
@@ -62,10 +69,46 @@ public class AuthController {
         @ApiResponse(responseCode = "409", description = "User already exists")
     })
     public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> userData) {
+        String username = userData.get("username");
+        String email = userData.get("email");
+        String password = userData.get("password");
+        
+        // Check if user already exists
+        if (userRepository.existsByEmail(email)) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Email already registered");
+            return ResponseEntity.status(409).body(errorResponse);
+        }
+        
+        if (userRepository.existsByUsername(username)) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Username already taken");
+            return ResponseEntity.status(409).body(errorResponse);
+        }
+        
+        // Create and save new user
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setEmail(email);
+        newUser.setPassword(passwordEncoder.encode(password)); // Hash password
+        newUser.setFirstName(userData.getOrDefault("firstName", ""));
+        newUser.setLastName(userData.getOrDefault("lastName", ""));
+        newUser.setPhoneNumber(userData.getOrDefault("phone", ""));
+        newUser.setRole(User.Role.CUSTOMER);
+        newUser.setActive(true);
+        
+        User savedUser = userRepository.save(newUser);
+        
+        // Generate token for auto-login
+        String token = jwtService.generateToken(email);
+        
         Map<String, Object> response = new HashMap<>();
         response.put("message", "User registered successfully");
-        response.put("username", userData.get("username"));
-        response.put("email", userData.get("email"));
+        response.put("userId", savedUser.getId());
+        response.put("username", savedUser.getUsername());
+        response.put("email", savedUser.getEmail());
+        response.put("token", token);
+        response.put("type", "Bearer");
         return ResponseEntity.ok(response);
     }
 
