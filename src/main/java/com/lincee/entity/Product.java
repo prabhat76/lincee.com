@@ -102,6 +102,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
+    private List<Collection> collections = new ArrayList<>();
+
     // Constructors
     public Product() {}
     
@@ -179,4 +182,7 @@ public class Product {
 
     public List<Review> getReviews() { return reviews; }
     public void setReviews(List<Review> reviews) { this.reviews = reviews; }
+
+    public List<Collection> getCollections() { return collections; }
+    public void setCollections(List<Collection> collections) { this.collections = collections; }
 }
