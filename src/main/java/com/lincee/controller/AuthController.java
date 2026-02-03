@@ -33,16 +33,18 @@ public class AuthController {
         @ApiResponse(responseCode = "401", description = "Invalid credentials")
     })
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> credentials) {
-        String username = credentials.get("username");
+        String email = credentials.get("email");
         String password = credentials.get("password");
         
-        Optional<User> user = userRepository.findByUsername(username);
+        Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent()) {
-            String token = jwtService.generateToken(username);
+            String token = jwtService.generateToken(email);
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
             response.put("type", "Bearer");
-            response.put("username", username);
+            response.put("email", email);
+            response.put("userId", user.get().getId());
+            response.put("username", user.get().getUsername());
             response.put("message", "Login successful");
             return ResponseEntity.ok(response);
         }
