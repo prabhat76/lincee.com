@@ -28,6 +28,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+                // Allow preflight requests (OPTIONS)
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // Admin-only endpoints
                 .requestMatchers("/api/v1/collections/admin/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/v1/products").hasAuthority("ADMIN")
