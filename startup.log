@@ -1,3 +1,31 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< com.lincee:lincee-backend >----------------------
+[INFO] Building lincee-backend 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.2.0:run (default-cli) > test-compile @ lincee-backend >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ lincee-backend ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ lincee-backend ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ lincee-backend ---
+[INFO] skip non existing resourceDirectory /Users/prabhatkumar/Documents/lincee-backend/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ lincee-backend ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] <<< spring-boot:3.2.0:run (default-cli) < test-compile @ lincee-backend <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.2.0:run (default-cli) @ lincee-backend ---
+[INFO] Attaching agents: []
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -7,22 +35,47 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.0)
 
-2026-02-07T14:41:39.500+05:30  INFO 73199 --- [           main] com.lincee.LinceeApplication             : Starting LinceeApplication v1.0.0 using Java 25.0.2 with PID 73199 (/Users/prabhatkumar/Documents/lincee-backend/target/lincee-backend-1.0.0.jar started by prabhatkumar in /Users/prabhatkumar/Documents/lincee-backend)
-2026-02-07T14:41:39.501+05:30  INFO 73199 --- [           main] com.lincee.LinceeApplication             : No active profile set, falling back to 1 default profile: "default"
-2026-02-07T14:41:39.953+05:30  INFO 73199 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-02-07T14:41:39.979+05:30  INFO 73199 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 22 ms. Found 9 JPA repository interfaces.
+2026-02-07T19:26:47.111+05:30  INFO 23601 --- [           main] com.lincee.LinceeApplication             : Starting LinceeApplication using Java 25.0.2 with PID 23601 (/Users/prabhatkumar/Documents/lincee-backend/target/classes started by prabhatkumar in /Users/prabhatkumar/Documents/lincee-backend)
+2026-02-07T19:26:47.111+05:30  INFO 23601 --- [           main] com.lincee.LinceeApplication             : No active profile set, falling back to 1 default profile: "default"
+2026-02-07T19:26:47.391+05:30  INFO 23601 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-07T19:26:47.413+05:30  INFO 23601 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 9 JPA repository interfaces.
 WARNING: A restricted method in java.lang.System has been called
-WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (jar:nested:/Users/prabhatkumar/Documents/lincee-backend/target/lincee-backend-1.0.0.jar/!BOOT-INF/lib/tomcat-embed-core-10.1.16.jar!/)
+WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (file:/Users/prabhatkumar/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.16/tomcat-embed-core-10.1.16.jar)
 WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
 WARNING: Restricted methods will be blocked in a future release unless native access is enabled
 
-2026-02-07T14:41:40.523+05:30  INFO 73199 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2026-02-07T14:41:40.528+05:30  INFO 73199 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-02-07T14:41:40.528+05:30  INFO 73199 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
-2026-02-07T14:41:40.544+05:30  INFO 73199 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2026-02-07T14:41:40.544+05:30  INFO 73199 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1000 ms
-2026-02-07T14:41:40.887+05:30  INFO 73199 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-02-07T14:41:40.901+05:30  INFO 73199 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-02-07T14:41:44.011+05:30  INFO 73199 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@41f23499
-2026-02-07T14:41:44.013+05:30  INFO 73199 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-02-07T14:41:44.287+05:30  WARN 73199 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-07T19:26:47.844+05:30  INFO 23601 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-07T19:26:47.848+05:30  INFO 23601 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-07T19:26:47.848+05:30  INFO 23601 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-02-07T19:26:47.872+05:30  INFO 23601 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-07T19:26:47.872+05:30  INFO 23601 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 739 ms
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2026-02-07T19:26:48.149+05:30  INFO 23601 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-07T19:26:48.159+05:30  INFO 23601 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-07T19:26:52.054+05:30  INFO 23601 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@646d58cd
+2026-02-07T19:26:52.055+05:30  INFO 23601 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-02-07T19:26:52.559+05:30  WARN 23601 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-07T19:27:17.416+05:30  INFO 23601 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-07T19:27:17.757+05:30  INFO 23601 --- [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-07T19:27:18.191+05:30  WARN 23601 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-07T19:27:18.208+05:30  WARN 23601 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 579a903a-0c3a-42fb-ab52-6bd21d7984e4
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-02-07T19:27:18.409+05:30  INFO 23601 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoint(s) beneath base path '/actuator'
+2026-02-07T19:27:18.688+05:30  INFO 23601 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-02-07T19:27:18.696+05:30  INFO 23601 --- [           main] com.lincee.LinceeApplication             : Started LinceeApplication in 31.727 seconds (process running for 31.873)
+ℹ️ Sweatshorts products already exist (5 found), skipping initialization
+ℹ️ Sweatshirt products already exist (26 found), skipping initialization
+🔄 Initializing Hoodie Products...
+2026-02-07T19:27:26.183+05:30  INFO 23601 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-07T19:27:26.204+05:30  WARN 23601 --- [nio-8080-exec-1] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/api/v1/health' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+✅ Successfully initialized 26 Hoodie products
+📦 Products added with real Cloudinary images
+🏷️  Price range: $46.99 - $79.99
+🔄 Initializing T-shirt Products...
+✅ Successfully initialized 9 T-shirt products
+📦 Products added with real Cloudinary images
+🏷️  Price range: $24.99 - $33.99

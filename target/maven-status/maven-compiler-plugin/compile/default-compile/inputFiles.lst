@@ -7,6 +7,7 @@
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/controller/CartController.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/repository/ReviewRepository.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/config/JwtAuthenticationFilter.java
+/Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/service/CloudinaryService.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/controller/DashboardController.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/entity/Review.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/controller/PaymentController.java
@@ -18,6 +19,7 @@
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/service/JwtService.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/service/ReviewService.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/controller/AddressController.java
+/Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/config/CloudinaryConfig.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/controller/ImageController.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/entity/Order.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/dto/CollectionDTO.java

@@ -10,6 +10,7 @@ com/lincee/config/CorsConfig.class
 com/lincee/service/DataInitService.class
 com/lincee/controller/DashboardController$1.class
 com/lincee/controller/AuthController.class
+com/lincee/config/CloudinaryConfig.class
 com/lincee/entity/Payment$PaymentStatus.class
 com/lincee/dto/CollectionDTO$ProductSummaryDTO.class
 com/lincee/entity/User.class
@@ -46,6 +47,7 @@ com/lincee/controller/UserController.class
 com/lincee/controller/HealthController.class
 com/lincee/service/CartService.class
 com/lincee/controller/DashboardController$3.class
+com/lincee/service/CloudinaryService.class
 com/lincee/repository/AddressRepository.class
 com/lincee/config/OpenApiConfig.class
 com/lincee/entity/User$Role.class
