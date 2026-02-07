@@ -21,8 +21,10 @@ com/lincee/service/CollectionService.class
 com/lincee/entity/OrderItem.class
 com/lincee/repository/UserRepository.class
 com/lincee/entity/Address.class
+com/lincee/config/StripeConfig.class
 com/lincee/controller/AddressController.class
 com/lincee/entity/Order.class
+com/lincee/controller/StripeController.class
 com/lincee/controller/CollectionController.class
 com/lincee/service/OrderService.class
 com/lincee/service/ReviewService.class
@@ -30,6 +32,7 @@ com/lincee/dto/CollectionDTO.class
 com/lincee/repository/ReviewRepository.class
 com/lincee/dto/AddressDTO.class
 com/lincee/service/AddressService.class
+com/lincee/service/StripeService.class
 com/lincee/entity/Product.class
 com/lincee/controller/ImageController.class
 com/lincee/config/SecurityConfig.class

@@ -30,6 +30,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Allow preflight requests (OPTIONS)
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                // Stripe webhook (must be public for Stripe to call)
+                .requestMatchers(HttpMethod.POST, "/api/v1/stripe/webhook").permitAll()
                 // Admin-only endpoints
                 .requestMatchers("/api/v1/collections/admin/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/v1/products").hasAuthority("ADMIN")
