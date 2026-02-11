@@ -37,9 +37,22 @@ public class AuthController {
     })
     public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> credentials) {
         String email = credentials.get("email");
+        String username = credentials.get("username");
         String password = credentials.get("password");
         
-        Optional<User> userOpt = userRepository.findByEmail(email);
+        Optional<User> userOpt = Optional.empty();
+        
+        if (email != null) {
+            userOpt = userRepository.findByEmail(email);
+        }
+        
+        if (!userOpt.isPresent() && username != null) {
+            userOpt = userRepository.findByUsername(username);
+            if (!userOpt.isPresent() && username.contains("@")) {
+                userOpt = userRepository.findByEmail(username);
+            }
+        }
+        
         if (userOpt.isPresent()) {
             User user = userOpt.get();
             // Validate password
