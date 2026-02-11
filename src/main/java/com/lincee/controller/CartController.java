@@ -75,7 +75,7 @@ public class CartController {
         return ResponseEntity.ok(cartItem);
     }
     
-    @DeleteMapping("/user/{userId}/items/{cartItemId}")
+    @RequestMapping(value = "/user/{userId}/items/{cartItemId}", method = RequestMethod.DELETE)
     @Operation(summary = "Remove item from cart", description = "Remove a product from the user's shopping cart")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "204", description = "Item removed from cart successfully"),
