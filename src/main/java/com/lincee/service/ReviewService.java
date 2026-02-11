@@ -5,6 +5,7 @@ import com.lincee.entity.Product;
 import com.lincee.entity.Review;
 import com.lincee.entity.User;
 import com.lincee.repository.ProductRepository;
+import com.lincee.repository.OrderRepository;
 import com.lincee.repository.ReviewRepository;
 import com.lincee.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class ReviewService {
     @Autowired
     private UserRepository userRepository;
     
+    @Autowired
+    private OrderRepository orderRepository;
+    
     public ReviewDTO addReview(Long productId, Long userId, ReviewDTO reviewDTO) {
         Optional<Product> product = productRepository.findById(productId);
         if (!product.isPresent()) {
@@ -53,7 +57,10 @@ public class ReviewService {
         review.setRating(reviewDTO.getRating());
         review.setTitle(reviewDTO.getTitle());
         review.setComment(reviewDTO.getComment());
-        review.setVerifiedPurchase(reviewDTO.getVerifiedPurchase() != null ? reviewDTO.getVerifiedPurchase() : false);
+        
+        // Verify purchase from database instead of trusting DTO
+        boolean isVerified = orderRepository.existsByUserIdAndProductIdAndStatusDelivered(userId, productId);
+        review.setVerifiedPurchase(isVerified);
         
         Review savedReview = reviewRepository.save(review);
         return convertToDTO(savedReview);

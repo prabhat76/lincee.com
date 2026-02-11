@@ -4,8 +4,11 @@ import com.lincee.dto.OrderDTO;
 import com.lincee.entity.Order;
 import com.lincee.entity.Order.OrderStatus;
 import com.lincee.entity.OrderItem;
+import com.lincee.entity.Product;
 import com.lincee.entity.User;
+import com.lincee.dto.OrderItemDTO;
 import com.lincee.repository.OrderRepository;
+import com.lincee.repository.ProductRepository;
 import com.lincee.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +31,9 @@ public class OrderService {
     private OrderRepository orderRepository;
     
     @Autowired
+    private ProductRepository productRepository;
+    
+    @Autowired
     private UserRepository userRepository;
     
     public OrderDTO createOrder(Long userId, OrderDTO orderDTO) {
@@ -36,9 +42,12 @@ public class OrderService {
             throw new RuntimeException("User not found");
         }
         
+        if (orderDTO.getOrderItems() == null || orderDTO.getOrderItems().isEmpty()) {
+            throw new RuntimeException("Order must contain items");
+        }
+
         Order order = new Order();
         order.setUser(user.get());
-        order.setTotalAmount(orderDTO.getTotalAmount());
         order.setDiscountAmount(orderDTO.getDiscountAmount() != null ? orderDTO.getDiscountAmount() : BigDecimal.ZERO);
         order.setShippingCost(orderDTO.getShippingCost() != null ? orderDTO.getShippingCost() : BigDecimal.ZERO);
         order.setTaxAmount(orderDTO.getTaxAmount() != null ? orderDTO.getTaxAmount() : BigDecimal.ZERO);
@@ -47,6 +56,38 @@ public class OrderService {
         order.setNotes(orderDTO.getNotes());
         order.setEstimatedDeliveryDate(LocalDateTime.now().plusDays(7));
         
+        // Process Order Items and Calculate Total
+        BigDecimal calculatedTotal = BigDecimal.ZERO;
+        
+        for (OrderItemDTO itemDTO : orderDTO.getOrderItems()) {
+            Product product = productRepository.findById(itemDTO.getProductId())
+                    .orElseThrow(() -> new RuntimeException("Product not found: " + itemDTO.getProductId()));
+            
+            // Check Stock
+            if (product.getStockQuantity() < itemDTO.getQuantity()) {
+                throw new RuntimeException("Insufficient stock for product: " + product.getName());
+            }
+            
+            // Deduct Stock
+            product.setStockQuantity(product.getStockQuantity() - itemDTO.getQuantity());
+            productRepository.save(product);
+            
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setProduct(product);
+            orderItem.setQuantity(itemDTO.getQuantity());
+            orderItem.setUnitPrice(product.getDiscountPrice() != null ? product.getDiscountPrice() : product.getPrice());
+            orderItem.setTotalPrice(orderItem.getUnitPrice().multiply(new BigDecimal(itemDTO.getQuantity())));
+            orderItem.setSize(itemDTO.getSize());
+            orderItem.setColor(itemDTO.getColor());
+            
+            order.getOrderItems().add(orderItem);
+            calculatedTotal = calculatedTotal.add(orderItem.getTotalPrice());
+        }
+        
+        // Set final total (Items + Tax + Shipping - Discount)
+        order.setTotalAmount(calculatedTotal.add(order.getTaxAmount()).add(order.getShippingCost()).subtract(order.getDiscountAmount()));
+
         Order savedOrder = orderRepository.save(order);
         return convertToDTO(savedOrder);
     }

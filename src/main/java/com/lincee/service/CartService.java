@@ -69,6 +69,10 @@ public class CartService {
         if (!product.isPresent()) {
             throw new RuntimeException("Product not found");
         }
+
+        if (quantity <= 0) {
+            throw new RuntimeException("Quantity must be greater than 0");
+        }
         
         Cart existingCart = cart.get();
         Optional<CartItem> existingItem = cartItemRepository.findByCartIdAndProductId(existingCart.getId(), productId);
@@ -76,8 +80,15 @@ public class CartService {
         CartItem cartItem;
         if (existingItem.isPresent()) {
             cartItem = existingItem.get();
-            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+            int newQuantity = cartItem.getQuantity() + quantity;
+            if (product.get().getStockQuantity() < newQuantity) {
+                throw new RuntimeException("Insufficient stock. Available: " + product.get().getStockQuantity());
+            }
+            cartItem.setQuantity(newQuantity);
         } else {
+            if (product.get().getStockQuantity() < quantity) {
+                throw new RuntimeException("Insufficient stock. Available: " + product.get().getStockQuantity());
+            }
             cartItem = new CartItem(existingCart, product.get(), quantity);
         }
         
@@ -106,6 +117,15 @@ public class CartService {
             throw new RuntimeException("Cart item not found");
         }
         
+        if (quantity <= 0) {
+            removeItemFromCart(userId, cartItemId);
+            return convertCartItemToDTO(cartItem.get()); // Return the removed item state or handle differently
+        }
+
+        if (cartItem.get().getProduct().getStockQuantity() < quantity) {
+            throw new RuntimeException("Insufficient stock. Available: " + cartItem.get().getProduct().getStockQuantity());
+        }
+
         CartItem item = cartItem.get();
         item.setQuantity(quantity);
         CartItem updatedItem = cartItemRepository.save(item);

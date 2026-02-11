@@ -8,8 +8,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +29,13 @@ public class ProductController {
     @GetMapping
     @Operation(summary = "Get all products", description = "Retrieve all products or filter by active status")
     @ApiResponse(responseCode = "200", description = "Successfully retrieved products")
-    public ResponseEntity<List<Product>> getAllProducts(
-            @Parameter(description = "Filter by active status") @RequestParam(required = false) Boolean active) {
+    public ResponseEntity<Page<Product>> getAllProducts(
+            @Parameter(description = "Filter by active status") @RequestParam(required = false) Boolean active,
+            @Parameter(hidden = true) Pageable pageable) {
         if (active != null && active) {
-            return ResponseEntity.ok(productRepository.findByActiveTrue());
+            return ResponseEntity.ok(productRepository.findByActiveTrue(pageable));
         }
-        return ResponseEntity.ok(productRepository.findAll());
+        return ResponseEntity.ok(productRepository.findAll(pageable));
     }
 
     @GetMapping("/{id}")
@@ -48,12 +53,12 @@ public class ProductController {
     @PostMapping
     @Operation(summary = "Create new product", description = "Add a new streetwear product to the catalog")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Product created successfully"),
+        @ApiResponse(responseCode = "201", description = "Product created successfully"),
         @ApiResponse(responseCode = "400", description = "Invalid product data")
     })
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) {
         Product savedProduct = productRepository.save(product);
-        return ResponseEntity.ok(savedProduct);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
     }
 
     @PutMapping("/{id}")
@@ -64,7 +69,7 @@ public class ProductController {
     })
     public ResponseEntity<Product> updateProduct(
             @Parameter(description = "Product ID") @PathVariable Long id,
-            @RequestBody Product productDetails) {
+            @Valid @RequestBody Product productDetails) {
         Optional<Product> optionalProduct = productRepository.findById(id);
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
@@ -91,14 +96,14 @@ public class ProductController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete product", description = "Remove a product from the catalog")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Product deleted successfully"),
+        @ApiResponse(responseCode = "204", description = "Product deleted successfully"),
         @ApiResponse(responseCode = "404", description = "Product not found")
     })
     public ResponseEntity<Void> deleteProduct(
             @Parameter(description = "Product ID") @PathVariable Long id) {
         if (productRepository.existsById(id)) {
             productRepository.deleteById(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
@@ -106,17 +111,19 @@ public class ProductController {
     @GetMapping("/category/{category}")
     @Operation(summary = "Get products by category", description = "Retrieve products filtered by category")
     @ApiResponse(responseCode = "200", description = "Products retrieved successfully")
-    public ResponseEntity<List<Product>> getProductsByCategory(
-            @Parameter(description = "Product category") @PathVariable String category) {
-        return ResponseEntity.ok(productRepository.findByCategory(category));
+    public ResponseEntity<Page<Product>> getProductsByCategory(
+            @Parameter(description = "Product category") @PathVariable String category,
+            @Parameter(hidden = true) Pageable pageable) {
+        return ResponseEntity.ok(productRepository.findByCategory(category, pageable));
     }
 
     @GetMapping("/brand/{brand}")
     @Operation(summary = "Get products by brand", description = "Retrieve products filtered by brand")
     @ApiResponse(responseCode = "200", description = "Products retrieved successfully")
-    public ResponseEntity<List<Product>> getProductsByBrand(
-            @Parameter(description = "Product brand") @PathVariable String brand) {
-        return ResponseEntity.ok(productRepository.findByBrand(brand));
+    public ResponseEntity<Page<Product>> getProductsByBrand(
+            @Parameter(description = "Product brand") @PathVariable String brand,
+            @Parameter(hidden = true) Pageable pageable) {
+        return ResponseEntity.ok(productRepository.findByBrand(brand, pageable));
     }
 
     @GetMapping("/featured")
@@ -129,9 +136,10 @@ public class ProductController {
     @GetMapping("/search")
     @Operation(summary = "Search products", description = "Search products by name or description")
     @ApiResponse(responseCode = "200", description = "Search completed successfully")
-    public ResponseEntity<List<Product>> searchProducts(
-            @Parameter(description = "Search keyword") @RequestParam String keyword) {
-        return ResponseEntity.ok(productRepository.searchProducts(keyword));
+    public ResponseEntity<Page<Product>> searchProducts(
+            @Parameter(description = "Search keyword") @RequestParam String keyword,
+            @Parameter(hidden = true) Pageable pageable) {
+        return ResponseEntity.ok(productRepository.searchProducts(keyword, pageable));
     }
 
     @PatchMapping("/{id}/stock")
@@ -143,6 +151,9 @@ public class ProductController {
     public ResponseEntity<Product> updateStock(
             @Parameter(description = "Product ID") @PathVariable Long id,
             @Parameter(description = "New stock quantity") @RequestParam Integer quantity) {
+        if (quantity < 0) {
+            return ResponseEntity.badRequest().build();
+        }
         Optional<Product> optionalProduct = productRepository.findById(id);
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
