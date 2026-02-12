@@ -26,10 +26,21 @@ public class DataInitService implements CommandLineRunner {
     @Override
     public void run(String... args) {
         initializeUsers();
-        initializeSweatShortsProducts();
-        initializeSweatshirtProducts();
-        initializeHoodieProducts();
-        initializeTshirtProducts();
+        
+        // Check total products to ensure all categories are initialized
+        long totalProducts = productRepository.count();
+        
+        // If total products is less than 52 (12 hoodies + 9 tshirts + 26 sweatshirts + 5 sweatshorts),
+        // reinitialize missing products
+        if (totalProducts < 52) {
+            System.out.println("⚠️  Found only " + totalProducts + " products. Reinitializing missing products...");
+            initializeSweatShortsProducts();
+            initializeSweatshirtProducts();
+            initializeHoodieProducts();
+            initializeTshirtProducts();
+        } else {
+            System.out.println("✅ All products already initialized (" + totalProducts + " found)");
+        }
     }
     
     private void initializeUsers() {
