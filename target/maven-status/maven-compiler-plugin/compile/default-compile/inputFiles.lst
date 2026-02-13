@@ -1,4 +1,5 @@
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/entity/User.java
+/Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/exception/GlobalExceptionHandler.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/repository/ProductRepository.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/service/StripeService.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/dto/CartDTO.java
@@ -28,6 +29,7 @@
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/dto/PaymentDTO.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/service/DataInitService.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/controller/HealthController.java
+/Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/exception/ApiErrorResponse.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/repository/PaymentRepository.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/controller/UserController.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/repository/CartRepository.java
@@ -48,8 +50,10 @@
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/controller/ReviewController.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/config/CorsConfig.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/repository/CartItemRepository.java
+/Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/exception/ApiException.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/dto/ReviewDTO.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/dto/OrderDTO.java
+/Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/exception/ErrorCode.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/config/SecurityConfig.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/entity/Cart.java
 /Users/prabhatkumar/Documents/lincee-backend/src/main/java/com/lincee/config/StripeConfig.java

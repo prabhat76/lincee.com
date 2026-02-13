@@ -5,6 +5,7 @@ com/lincee/dto/OrderDTO.class
 com/lincee/dto/CartDTO.class
 com/lincee/dto/ReviewDTO.class
 com/lincee/controller/ProductController.class
+com/lincee/exception/GlobalExceptionHandler.class
 com/lincee/config/JwtAuthenticationFilter.class
 com/lincee/config/CorsConfig.class
 com/lincee/service/DataInitService.class
@@ -29,6 +30,7 @@ com/lincee/controller/StripeController.class
 com/lincee/controller/CollectionController.class
 com/lincee/service/OrderService.class
 com/lincee/service/ReviewService.class
+com/lincee/exception/ErrorCode.class
 com/lincee/dto/CollectionDTO.class
 com/lincee/repository/ReviewRepository.class
 com/lincee/dto/AddressDTO.class
@@ -47,6 +49,7 @@ com/lincee/controller/UserController.class
 com/lincee/controller/HealthController.class
 com/lincee/service/CartService.class
 com/lincee/controller/DashboardController$3.class
+com/lincee/exception/ApiException.class
 com/lincee/service/CloudinaryService.class
 com/lincee/repository/AddressRepository.class
 com/lincee/config/OpenApiConfig.class
@@ -64,5 +67,6 @@ com/lincee/repository/CartRepository.class
 com/lincee/entity/CartItem.class
 com/lincee/controller/DashboardController$2.class
 com/lincee/repository/PaymentRepository.class
+com/lincee/exception/ApiErrorResponse.class
 com/lincee/repository/ProductRepository.class
 com/lincee/controller/ReviewController.class
