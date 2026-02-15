@@ -1,11 +1,14 @@
 package com.lincee.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +18,8 @@ import java.util.Map;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
     
     /**
      * Handle custom API exceptions
@@ -51,6 +56,23 @@ public class GlobalExceptionHandler {
         errorResponse.setPath(request.getDescription(false).replace("uri=", ""));
         
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handle file upload size exceeded
+     */
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiErrorResponse> handleMaxUploadSizeExceeded(
+            MaxUploadSizeExceededException ex,
+            WebRequest request) {
+
+        ApiErrorResponse errorResponse = new ApiErrorResponse(
+                ErrorCode.VALIDATION_ERROR,
+                "File size exceeds the allowed limit"
+        );
+        errorResponse.setPath(request.getDescription(false).replace("uri=", ""));
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.PAYLOAD_TOO_LARGE);
     }
     
     /**
@@ -91,7 +113,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleGlobalException(
             Exception ex,
             WebRequest request) {
-        
+        logger.error("Unhandled exception", ex);
         ApiErrorResponse errorResponse = new ApiErrorResponse(ErrorCode.INTERNAL_ERROR, ex.getMessage());
         errorResponse.setPath(request.getDescription(false).replace("uri=", ""));
         
