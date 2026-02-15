@@ -49,8 +49,8 @@ public class Product {
     @Column(name = "sub_category")
     private String subCategory;
     
-    @Column(nullable = false)
-    private String brand;
+    @Column
+    private String brand = "Lincee";
     
     @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity = 0;
