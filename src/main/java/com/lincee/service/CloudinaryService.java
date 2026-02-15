@@ -26,13 +26,7 @@ public class CloudinaryService {
         Map uploadResult = cloudinary.uploader().upload(file, 
             ObjectUtils.asMap(
                 "folder", folder,
-                "resource_type", "image",
-                "transformation", ObjectUtils.asMap(
-                    "width", 800,
-                    "height", 800,
-                    "crop", "fill",
-                    "quality", "auto"
-                )
+                "resource_type", "image"
             ));
         return uploadResult.get("secure_url").toString();
     }
@@ -47,13 +41,7 @@ public class CloudinaryService {
         Map uploadResult = cloudinary.uploader().upload(file.getBytes(), 
             ObjectUtils.asMap(
                 "folder", folder,
-                "resource_type", "image",
-                "transformation", ObjectUtils.asMap(
-                    "width", 800,
-                    "height", 800,
-                    "crop", "fill",
-                    "quality", "auto"
-                )
+                "resource_type", "image"
             ));
         return uploadResult.get("secure_url").toString();
     }
