@@ -30,6 +30,31 @@ public class ImageController {
             @Parameter(description = "Image file to upload") @RequestParam("file") MultipartFile file,
             @Parameter(description = "Cloudinary folder path (e.g., products/hoodies)") @RequestParam(defaultValue = "products") String folder) {
         try {
+            // Validate file
+            if (file == null || file.isEmpty()) {
+                Map<String, Object> error = new HashMap<>();
+                error.put("success", false);
+                error.put("error", "File is empty");
+                return ResponseEntity.badRequest().body(error);
+            }
+            
+            // Validate file type
+            String contentType = file.getContentType();
+            if (contentType == null || !contentType.startsWith("image/")) {
+                Map<String, Object> error = new HashMap<>();
+                error.put("success", false);
+                error.put("error", "File must be an image (jpeg, png, gif, etc.)");
+                return ResponseEntity.badRequest().body(error);
+            }
+            
+            // Validate file size (max 5MB)
+            if (file.getSize() > 5 * 1024 * 1024) {
+                Map<String, Object> error = new HashMap<>();
+                error.put("success", false);
+                error.put("error", "File size exceeds 5MB limit");
+                return ResponseEntity.badRequest().body(error);
+            }
+            
             // Upload to Cloudinary
             String imageUrl = cloudinaryService.uploadImage(file, folder);
             
@@ -44,7 +69,8 @@ public class ImageController {
             Map<String, Object> error = new HashMap<>();
             error.put("success", false);
             error.put("error", "Failed to upload image: " + e.getMessage());
-            return ResponseEntity.badRequest().body(error);
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(error);
         }
     }
     

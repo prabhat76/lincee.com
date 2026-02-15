@@ -36,8 +36,7 @@ public class Address {
     @Column(nullable = false)
     private String city;
     
-    @NotBlank
-    @Column(nullable = false)
+    @Column
     private String state;
     
     @NotBlank
