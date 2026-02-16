@@ -1,10 +1,12 @@
 package com.lincee.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import java.time.LocalDateTime;
 
 public class AddressDTO {
     private Long id;
     private Long userId;
+    @JsonAlias({"street"})
     private String addressLine1;
     private String addressLine2;
     private String city;
@@ -15,6 +17,7 @@ public class AddressDTO {
     private Boolean isDefault;
     private Boolean isShippingAddress;
     private Boolean isBillingAddress;
+    @JsonAlias({"type"})
     private String addressType;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

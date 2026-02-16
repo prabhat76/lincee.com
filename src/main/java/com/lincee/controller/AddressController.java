@@ -29,10 +29,14 @@ public class AddressController {
         @ApiResponse(responseCode = "400", description = "Invalid address data"),
         @ApiResponse(responseCode = "404", description = "User not found")
     })
-    public ResponseEntity<AddressDTO> addAddress(
-            @Parameter(description = "User ID") @RequestParam Long userId,
+    public ResponseEntity<?> addAddress(
+            @Parameter(description = "User ID") @RequestParam(required = false) Long userId,
             @RequestBody AddressDTO addressDTO) {
-        AddressDTO createdAddress = addressService.addAddress(userId, addressDTO);
+        Long resolvedUserId = userId != null ? userId : addressDTO.getUserId();
+        if (resolvedUserId == null) {
+            return ResponseEntity.badRequest().body("userId is required");
+        }
+        AddressDTO createdAddress = addressService.addAddress(resolvedUserId, addressDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAddress);
     }
     

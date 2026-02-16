@@ -42,6 +42,7 @@ public class AddressService {
         address.setIsShippingAddress(addressDTO.getIsShippingAddress() != null ? addressDTO.getIsShippingAddress() : true);
         address.setIsBillingAddress(addressDTO.getIsBillingAddress() != null ? addressDTO.getIsBillingAddress() : false);
         address.setAddressType(addressDTO.getAddressType());
+        applyAddressTypeDefaults(address, addressDTO);
         
         Address savedAddress = addressRepository.save(address);
         return convertToDTO(savedAddress);
@@ -117,9 +118,31 @@ public class AddressService {
         if (addressDTO.getAddressType() != null) {
             existingAddress.setAddressType(addressDTO.getAddressType());
         }
+        applyAddressTypeDefaults(existingAddress, addressDTO);
         
         Address updatedAddress = addressRepository.save(existingAddress);
         return convertToDTO(updatedAddress);
+    }
+
+    private void applyAddressTypeDefaults(Address address, AddressDTO addressDTO) {
+        if (addressDTO.getAddressType() == null) {
+            return;
+        }
+
+        boolean shippingSet = addressDTO.getIsShippingAddress() != null;
+        boolean billingSet = addressDTO.getIsBillingAddress() != null;
+        if (shippingSet || billingSet) {
+            return;
+        }
+
+        String type = addressDTO.getAddressType().trim().toUpperCase();
+        if ("SHIPPING".equals(type)) {
+            address.setIsShippingAddress(true);
+            address.setIsBillingAddress(false);
+        } else if ("BILLING".equals(type)) {
+            address.setIsShippingAddress(false);
+            address.setIsBillingAddress(true);
+        }
     }
     
     public void deleteAddress(Long addressId) {
