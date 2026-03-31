@@ -20,8 +20,8 @@ public class CorsConfig {
             "http://localhost:3000",
             "http://localhost:4200",
             "http://localhost:8080",
-            "https://linceecom-production.up.railway.app",
-            "http://linceecom-production.up.railway.app",
+            "https://linceecom-production-0120.up.railway.app",
+            "http://linceecom-production-0120.up.railway.app",
             "https://lincee-ui.vercel.app"
         ));
         

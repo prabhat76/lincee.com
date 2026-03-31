@@ -1,6 +1,6 @@
 # Lincee E-commerce API - Complete Request & Response Guide
 
-Base URL: `https://linceecom-production.up.railway.app`
+Base URL: `https://linceecom-production-0120.up.railway.app`
 
 ## 🔐 Authentication APIs
 
@@ -1888,8 +1888,8 @@ All error responses follow this structure:
 
 **Total Endpoints:** 78
 
-**Base URL:** `https://linceecom-production.up.railway.app`
+**Base URL:** `https://linceecom-production-0120.up.railway.app`
 
-**Swagger UI:** `https://linceecom-production.up.railway.app/swagger-ui.html`
+**Swagger UI:** `https://linceecom-production-0120.up.railway.app/swagger-ui.html`
 
-**API Docs JSON:** `https://linceecom-production.up.railway.app/v3/api-docs`
+**API Docs JSON:** `https://linceecom-production-0120.up.railway.app/v3/api-docs`

@@ -30,7 +30,7 @@ public class OpenApiConfig {
                                 .name("MIT License")
                                 .url("https://opensource.org/licenses/MIT")))
                 .servers(Arrays.asList(
-                        new Server().url("https://linceecom-production.up.railway.app").description("Production Server"),
+                        new Server().url("https://linceecom-production-0120.up.railway.app").description("Production Server"),
                         new Server().url("http://localhost:8080").description("Local Development Server")
                 ))
                 .components(new Components()

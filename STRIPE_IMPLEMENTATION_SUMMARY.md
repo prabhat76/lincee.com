@@ -51,7 +51,7 @@ STRIPE_WEBHOOK_SECRET=whsec_...your_webhook_secret
 ### Stripe Dashboard Setup
 1. Get API keys from: https://dashboard.stripe.com/test/apikeys
 2. Create webhook endpoint:
-   - URL: `https://linceecom-production.up.railway.app/api/v1/stripe/webhook`
+   - URL: `https://linceecom-production-0120.up.railway.app/api/v1/stripe/webhook`
    - Events: `payment_intent.succeeded`, `payment_intent.payment_failed`, `checkout.session.completed`
 3. Copy webhook signing secret
 

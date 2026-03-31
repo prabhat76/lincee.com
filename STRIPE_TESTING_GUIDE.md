@@ -5,7 +5,7 @@
 1. **Get JWT Token** (if needed for authenticated endpoints):
 ```bash
 # Login to get token
-curl -X POST "https://linceecom-production.up.railway.app/api/v1/auth/login" \
+curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/auth/login" \
   -H "Content-Type: application/json" \
   -d '{
     "email": "customer@example.com",
@@ -19,7 +19,7 @@ export JWT_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 2. **Create an Order** (if you need an orderId):
 ```bash
 # This assumes you have products and cart items
-curl -X POST "https://linceecom-production.up.railway.app/api/v1/orders" \
+curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/orders" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $JWT_TOKEN" \
   -d '{
@@ -37,7 +37,7 @@ export ORDER_ID=1
 ### 1. Create Payment Intent
 
 ```bash
-curl -X POST "https://linceecom-production.up.railway.app/api/v1/stripe/create-payment-intent?orderId=$ORDER_ID" \
+curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/stripe/create-payment-intent?orderId=$ORDER_ID" \
   -H "Authorization: Bearer $JWT_TOKEN" \
   | jq .
 ```
@@ -62,7 +62,7 @@ curl -X POST "https://linceecom-production.up.railway.app/api/v1/stripe/create-p
 ### 2. Create Checkout Session
 
 ```bash
-curl -X POST "https://linceecom-production.up.railway.app/api/v1/stripe/create-checkout-session?orderId=$ORDER_ID" \
+curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/stripe/create-checkout-session?orderId=$ORDER_ID" \
   -H "Authorization: Bearer $JWT_TOKEN" \
   | jq .
 ```
@@ -89,7 +89,7 @@ curl -X POST "https://linceecom-production.up.railway.app/api/v1/stripe/create-c
 # Replace with actual payment intent ID from step 1
 export PAYMENT_INTENT_ID="pi_3ABC123"
 
-curl "https://linceecom-production.up.railway.app/api/v1/stripe/payment-intent/$PAYMENT_INTENT_ID" \
+curl "https://linceecom-production-0120.up.railway.app/api/v1/stripe/payment-intent/$PAYMENT_INTENT_ID" \
   | jq .
 ```
 
@@ -119,7 +119,7 @@ curl "https://linceecom-production.up.railway.app/api/v1/stripe/payment-intent/$
 # Replace with actual session ID from step 2
 export SESSION_ID="cs_test_abc123xyz"
 
-curl "https://linceecom-production.up.railway.app/api/v1/stripe/session/$SESSION_ID" \
+curl "https://linceecom-production-0120.up.railway.app/api/v1/stripe/session/$SESSION_ID" \
   | jq .
 ```
 
@@ -173,13 +173,13 @@ stripe trigger payment_intent.succeeded
 
 ```bash
 # 1. Login
-TOKEN=$(curl -X POST "https://linceecom-production.up.railway.app/api/v1/auth/login" \
+TOKEN=$(curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/auth/login" \
   -H "Content-Type: application/json" \
   -d '{"email":"customer@example.com","password":"password123"}' \
   | jq -r '.token')
 
 # 2. Create Payment Intent
-PI_SECRET=$(curl -X POST "https://linceecom-production.up.railway.app/api/v1/stripe/create-payment-intent?orderId=1" \
+PI_SECRET=$(curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/stripe/create-payment-intent?orderId=1" \
   -H "Authorization: Bearer $TOKEN" \
   | jq -r '.clientSecret')
 
@@ -188,20 +188,20 @@ echo "Use this in your frontend with Stripe.js"
 
 # 3. Check status (after payment on frontend)
 PI_ID=$(echo $PI_SECRET | cut -d'_' -f1-3)
-curl "https://linceecom-production.up.railway.app/api/v1/stripe/payment-intent/$PI_ID" | jq .
+curl "https://linceecom-production-0120.up.railway.app/api/v1/stripe/payment-intent/$PI_ID" | jq .
 ```
 
 ### Option 2: Checkout Session Flow
 
 ```bash
 # 1. Login
-TOKEN=$(curl -X POST "https://linceecom-production.up.railway.app/api/v1/auth/login" \
+TOKEN=$(curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/auth/login" \
   -H "Content-Type: application/json" \
   -d '{"email":"customer@example.com","password":"password123"}' \
   | jq -r '.token')
 
 # 2. Create Checkout Session
-CHECKOUT_URL=$(curl -X POST "https://linceecom-production.up.railway.app/api/v1/stripe/create-checkout-session?orderId=1" \
+CHECKOUT_URL=$(curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/stripe/create-checkout-session?orderId=1" \
   -H "Authorization: Bearer $TOKEN" \
   | jq -r '.url')
 
@@ -209,7 +209,7 @@ echo "Open this URL in browser: $CHECKOUT_URL"
 echo "Complete payment with card: 4242 4242 4242 4242"
 
 # 3. After payment, check order status
-curl "https://linceecom-production.up.railway.app/api/v1/orders/1" \
+curl "https://linceecom-production-0120.up.railway.app/api/v1/orders/1" \
   -H "Authorization: Bearer $TOKEN" \
   | jq '.status'
 ```
@@ -222,12 +222,12 @@ After successful payment, check that database was updated:
 
 ```bash
 # Get order details
-curl "https://linceecom-production.up.railway.app/api/v1/orders/$ORDER_ID" \
+curl "https://linceecom-production-0120.up.railway.app/api/v1/orders/$ORDER_ID" \
   -H "Authorization: Bearer $TOKEN" \
   | jq '{ orderId: .id, status: .status, totalAmount: .totalAmount }'
 
 # Get payment details
-curl "https://linceecom-production.up.railway.app/api/v1/payments/order/$ORDER_ID" \
+curl "https://linceecom-production-0120.up.railway.app/api/v1/payments/order/$ORDER_ID" \
   -H "Authorization: Bearer $TOKEN" \
   | jq '{ paymentId: .id, status: .status, transactionId: .transactionId, paidAt: .paidAt }'
 ```
@@ -278,7 +278,7 @@ Card: 4000 0000 0000 0069
 ### Error: "Order not found"
 ```bash
 # List your orders first
-curl "https://linceecom-production.up.railway.app/api/v1/orders/my-orders" \
+curl "https://linceecom-production-0120.up.railway.app/api/v1/orders/my-orders" \
   -H "Authorization: Bearer $TOKEN" \
   | jq '.[].id'
 
@@ -288,7 +288,7 @@ curl "https://linceecom-production.up.railway.app/api/v1/orders/my-orders" \
 ### Error: "Unauthorized"
 ```bash
 # Your token expired, login again
-TOKEN=$(curl -X POST "https://linceecom-production.up.railway.app/api/v1/auth/login" \
+TOKEN=$(curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/auth/login" \
   -H "Content-Type: application/json" \
   -d '{"email":"customer@example.com","password":"password123"}' \
   | jq -r '.token')
@@ -304,7 +304,7 @@ TOKEN=$(curl -X POST "https://linceecom-production.up.railway.app/api/v1/auth/lo
 ### Webhook not received
 ```bash
 # Check webhook configuration in Stripe Dashboard
-# Verify URL: https://linceecom-production.up.railway.app/api/v1/stripe/webhook
+# Verify URL: https://linceecom-production-0120.up.railway.app/api/v1/stripe/webhook
 # Check selected events: payment_intent.succeeded, etc.
 # Test webhook delivery in Stripe Dashboard
 ```
@@ -350,13 +350,13 @@ When using live keys (after going live):
 
 ```bash
 # Check if Stripe dependency loaded
-curl "https://linceecom-production.up.railway.app/api/v1/health" | jq .
+curl "https://linceecom-production-0120.up.railway.app/api/v1/health" | jq .
 
 # Test CORS
-curl -I -X OPTIONS "https://linceecom-production.up.railway.app/api/v1/stripe/create-payment-intent"
+curl -I -X OPTIONS "https://linceecom-production-0120.up.railway.app/api/v1/stripe/create-payment-intent"
 
 # Check if webhook endpoint is accessible
-curl -X POST "https://linceecom-production.up.railway.app/api/v1/stripe/webhook" \
+curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/stripe/webhook" \
   -H "Content-Type: application/json" \
   -d '{"test": "ping"}'
 # Should return "Invalid signature" (expected)

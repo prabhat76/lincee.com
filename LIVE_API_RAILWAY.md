@@ -3,22 +3,22 @@
 
 **Base API URL:**
 ```
-https://linceecom-production.up.railway.app/api/v1
+https://linceecom-production-0120.up.railway.app/api/v1
 ```
 
 **Swagger UI (Interactive API Documentation):**
 ```
-https://linceecom-production.up.railway.app/swagger-ui.html
+https://linceecom-production-0120.up.railway.app/swagger-ui.html
 ```
 
 **OpenAPI Specification:**
 ```
-https://linceecom-production.up.railway.app/v3/api-docs
+https://linceecom-production-0120.up.railway.app/v3/api-docs
 ```
 
 **Health Check:**
 ```
-https://linceecom-production.up.railway.app/health
+https://linceecom-production-0120.up.railway.app/health
 ```
 
 ---
@@ -27,17 +27,17 @@ https://linceecom-production.up.railway.app/health
 
 ### 1. Health Check
 ```bash
-curl https://linceecom-production.up.railway.app/health
+curl https://linceecom-production-0120.up.railway.app/health
 ```
 
 ### 2. Get All Products
 ```bash
-curl https://linceecom-production.up.railway.app/api/v1/products
+curl https://linceecom-production-0120.up.railway.app/api/v1/products
 ```
 
 ### 3. Login
 ```bash
-curl -X POST https://linceecom-production.up.railway.app/api/v1/auth/login \
+curl -X POST https://linceecom-production-0120.up.railway.app/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "username": "admin@lincee.com",
@@ -47,7 +47,7 @@ curl -X POST https://linceecom-production.up.railway.app/api/v1/auth/login \
 
 ### 4. Register New User
 ```bash
-curl -X POST https://linceecom-production.up.railway.app/api/v1/auth/register \
+curl -X POST https://linceecom-production-0120.up.railway.app/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "username": "john_doe",
@@ -60,18 +60,18 @@ curl -X POST https://linceecom-production.up.railway.app/api/v1/auth/register \
 
 ### 5. Get Featured Products
 ```bash
-curl https://linceecom-production.up.railway.app/api/v1/products/featured
+curl https://linceecom-production-0120.up.railway.app/api/v1/products/featured
 ```
 
 ### 6. Search Products
 ```bash
-curl "https://linceecom-production.up.railway.app/api/v1/products/search?keyword=shirt"
+curl "https://linceecom-production-0120.up.railway.app/api/v1/products/search?keyword=shirt"
 ```
 
 ### 7. Dashboard Overview (Requires Auth)
 ```bash
 # First login and get token, then:
-curl https://linceecom-production.up.railway.app/api/v1/dashboard/overview \
+curl https://linceecom-production-0120.up.railway.app/api/v1/dashboard/overview \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
@@ -184,7 +184,7 @@ curl https://linceecom-production.up.railway.app/api/v1/dashboard/overview \
 
 ### Step 1: Login
 ```bash
-curl -X POST https://linceecom-production.up.railway.app/api/v1/auth/login \
+curl -X POST https://linceecom-production-0120.up.railway.app/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "username": "user@example.com",
@@ -204,7 +204,7 @@ curl -X POST https://linceecom-production.up.railway.app/api/v1/auth/login \
 
 ### Step 2: Use Token for Authenticated Requests
 ```bash
-curl https://linceecom-production.up.railway.app/api/v1/orders/user/1 \
+curl https://linceecom-production-0120.up.railway.app/api/v1/orders/user/1 \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
@@ -215,19 +215,19 @@ curl https://linceecom-production.up.railway.app/api/v1/orders/user/1 \
 ### 1️⃣ **Browse Products**
 ```bash
 # Get all products
-curl https://linceecom-production.up.railway.app/api/v1/products
+curl https://linceecom-production-0120.up.railway.app/api/v1/products
 
 # Search for T-shirts
-curl "https://linceecom-production.up.railway.app/api/v1/products/search?keyword=tshirt"
+curl "https://linceecom-production-0120.up.railway.app/api/v1/products/search?keyword=tshirt"
 
 # Get featured products
-curl https://linceecom-production.up.railway.app/api/v1/products/featured
+curl https://linceecom-production-0120.up.railway.app/api/v1/products/featured
 ```
 
 ### 2️⃣ **User Registration & Login**
 ```bash
 # Register
-curl -X POST https://linceecom-production.up.railway.app/api/v1/auth/register \
+curl -X POST https://linceecom-production-0120.up.railway.app/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "username": "john",
@@ -238,7 +238,7 @@ curl -X POST https://linceecom-production.up.railway.app/api/v1/auth/register \
   }'
 
 # Login
-curl -X POST https://linceecom-production.up.railway.app/api/v1/auth/login \
+curl -X POST https://linceecom-production-0120.up.railway.app/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username": "john@example.com", "password": "secure123"}'
 ```
@@ -246,21 +246,21 @@ curl -X POST https://linceecom-production.up.railway.app/api/v1/auth/login \
 ### 3️⃣ **Add Items to Cart**
 ```bash
 # Get or create cart
-curl https://linceecom-production.up.railway.app/api/v1/cart/user/1 \
+curl https://linceecom-production-0120.up.railway.app/api/v1/cart/user/1 \
   -H "Authorization: Bearer YOUR_TOKEN"
 
 # Add product to cart
-curl -X POST "https://linceecom-production.up.railway.app/api/v1/cart/user/1/items?productId=10&quantity=2&size=M&color=Black" \
+curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/cart/user/1/items?productId=10&quantity=2&size=M&color=Black" \
   -H "Authorization: Bearer YOUR_TOKEN"
 
 # View cart items
-curl https://linceecom-production.up.railway.app/api/v1/cart/user/1/items \
+curl https://linceecom-production-0120.up.railway.app/api/v1/cart/user/1/items \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
 ### 4️⃣ **Add Shipping Address**
 ```bash
-curl -X POST "https://linceecom-production.up.railway.app/api/v1/addresses?userId=1" \
+curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/addresses?userId=1" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -d '{
@@ -277,7 +277,7 @@ curl -X POST "https://linceecom-production.up.railway.app/api/v1/addresses?userI
 
 ### 5️⃣ **Create Order**
 ```bash
-curl -X POST "https://linceecom-production.up.railway.app/api/v1/orders?userId=1" \
+curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/orders?userId=1" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -d '{
@@ -291,7 +291,7 @@ curl -X POST "https://linceecom-production.up.railway.app/api/v1/orders?userId=1
 
 ### 6️⃣ **Process Payment**
 ```bash
-curl -X POST "https://linceecom-production.up.railway.app/api/v1/payments?orderId=1" \
+curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/payments?orderId=1" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -d '{
@@ -305,17 +305,17 @@ curl -X POST "https://linceecom-production.up.railway.app/api/v1/payments?orderI
 ### 7️⃣ **Track Order**
 ```bash
 # Get order by ID
-curl https://linceecom-production.up.railway.app/api/v1/orders/1 \
+curl https://linceecom-production-0120.up.railway.app/api/v1/orders/1 \
   -H "Authorization: Bearer YOUR_TOKEN"
 
 # Get order by order number
-curl https://linceecom-production.up.railway.app/api/v1/orders/number/ORD-1234567890 \
+curl https://linceecom-production-0120.up.railway.app/api/v1/orders/number/ORD-1234567890 \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
 ### 8️⃣ **Leave Review**
 ```bash
-curl -X POST "https://linceecom-production.up.railway.app/api/v1/reviews?productId=10&userId=1" \
+curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/reviews?productId=10&userId=1" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -d '{
@@ -332,15 +332,15 @@ curl -X POST "https://linceecom-production.up.railway.app/api/v1/reviews?product
 
 ```bash
 # Get complete dashboard overview
-curl https://linceecom-production.up.railway.app/api/v1/dashboard/overview \
+curl https://linceecom-production-0120.up.railway.app/api/v1/dashboard/overview \
   -H "Authorization: Bearer ADMIN_TOKEN"
 
 # Get order statistics
-curl https://linceecom-production.up.railway.app/api/v1/dashboard/orders/statistics \
+curl https://linceecom-production-0120.up.railway.app/api/v1/dashboard/orders/statistics \
   -H "Authorization: Bearer ADMIN_TOKEN"
 
 # Get payment statistics
-curl https://linceecom-production.up.railway.app/api/v1/dashboard/payments/statistics \
+curl https://linceecom-production-0120.up.railway.app/api/v1/dashboard/payments/statistics \
   -H "Authorization: Bearer ADMIN_TOKEN"
 ```
 
@@ -350,14 +350,14 @@ curl https://linceecom-production.up.railway.app/api/v1/dashboard/payments/stati
 
 Import the OpenAPI spec into Postman:
 ```
-https://linceecom-production.up.railway.app/v3/api-docs
+https://linceecom-production-0120.up.railway.app/v3/api-docs
 ```
 
 **Steps:**
 1. Open Postman
 2. Click "Import"
 3. Select "Link"
-4. Paste: `https://linceecom-production.up.railway.app/v3/api-docs`
+4. Paste: `https://linceecom-production-0120.up.railway.app/v3/api-docs`
 5. Click "Import"
 
 ---
@@ -380,7 +380,7 @@ https://linceecom-production.up.railway.app/v3/api-docs
 Your Railway app supports CORS from:
 - `http://localhost:3000` (Development)
 - `http://localhost:4200` (Development)
-- `http://linceecom-production.up.railway.app` (Production)
+- `http://linceecom-production-0120.up.railway.app` (Production)
 
 Allowed methods: `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS`, `PATCH`
 
@@ -388,10 +388,10 @@ Allowed methods: `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS`, `PATCH`
 
 ## 💡 Quick Links
 
-- **🌐 Live API:** https://linceecom-production.up.railway.app/api/v1
-- **📚 Swagger UI:** https://linceecom-production.up.railway.app/swagger-ui.html
-- **💚 Health Check:** https://linceecom-production.up.railway.app/health
-- **📄 OpenAPI Spec:** https://linceecom-production.up.railway.app/v3/api-docs
+- **🌐 Live API:** https://linceecom-production-0120.up.railway.app/api/v1
+- **📚 Swagger UI:** https://linceecom-production-0120.up.railway.app/swagger-ui.html
+- **💚 Health Check:** https://linceecom-production-0120.up.railway.app/health
+- **📄 OpenAPI Spec:** https://linceecom-production-0120.up.railway.app/v3/api-docs
 
 ---
 
@@ -402,7 +402,7 @@ Save this as `test-api.sh`:
 ```bash
 #!/bin/bash
 
-BASE_URL="https://linceecom-production.up.railway.app/api/v1"
+BASE_URL="https://linceecom-production-0120.up.railway.app/api/v1"
 
 echo "=========================================="
 echo "Testing Lincee API on Railway"
@@ -442,7 +442,7 @@ chmod +x test-api.sh
 
 ---
 
-**Production URL:** https://linceecom-production.up.railway.app  
+**Production URL:** https://linceecom-production-0120.up.railway.app  
 **Total Endpoints:** 92  
 **Status:** ✅ Live and Ready  
 **Last Updated:** February 3, 2026

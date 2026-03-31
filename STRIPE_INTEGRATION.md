@@ -50,7 +50,7 @@ stripe.cancel.url=https://your-frontend.vercel.app/payment/cancel
 
 **Request**:
 ```bash
-curl -X POST "https://linceecom-production.up.railway.app/api/v1/stripe/create-payment-intent?orderId=1" \
+curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/stripe/create-payment-intent?orderId=1" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
@@ -76,7 +76,7 @@ curl -X POST "https://linceecom-production.up.railway.app/api/v1/stripe/create-p
 
 **Request**:
 ```bash
-curl -X POST "https://linceecom-production.up.railway.app/api/v1/stripe/create-checkout-session?orderId=1" \
+curl -X POST "https://linceecom-production-0120.up.railway.app/api/v1/stripe/create-checkout-session?orderId=1" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
@@ -101,7 +101,7 @@ curl -X POST "https://linceecom-production.up.railway.app/api/v1/stripe/create-c
 
 **Request**:
 ```bash
-curl "https://linceecom-production.up.railway.app/api/v1/stripe/payment-intent/pi_3Abc123"
+curl "https://linceecom-production-0120.up.railway.app/api/v1/stripe/payment-intent/pi_3Abc123"
 ```
 
 **Response**:
@@ -125,7 +125,7 @@ curl "https://linceecom-production.up.railway.app/api/v1/stripe/payment-intent/p
 
 **Request**:
 ```bash
-curl "https://linceecom-production.up.railway.app/api/v1/stripe/session/cs_test_abc123"
+curl "https://linceecom-production-0120.up.railway.app/api/v1/stripe/session/cs_test_abc123"
 ```
 
 **Response**:
@@ -154,7 +154,7 @@ curl "https://linceecom-production.up.railway.app/api/v1/stripe/session/cs_test_
 
 **Webhook Configuration**:
 1. Go to Stripe Dashboard > Developers > Webhooks
-2. Add endpoint: `https://linceecom-production.up.railway.app/api/v1/stripe/webhook`
+2. Add endpoint: `https://linceecom-production-0120.up.railway.app/api/v1/stripe/webhook`
 3. Select events: `payment_intent.succeeded`, `payment_intent.payment_failed`, `checkout.session.completed`
 4. Copy the webhook signing secret and add to environment variables
 

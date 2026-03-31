@@ -26,8 +26,8 @@ The API now accepts requests from:
 - `http://localhost:3000` (Local React/Next.js dev)
 - `http://localhost:4200` (Local Angular dev)
 - `http://localhost:8080` (Local backend)
-- `https://linceecom-production.up.railway.app` (Production - HTTPS)
-- `http://linceecom-production.up.railway.app` (Production - HTTP fallback)
+- `https://linceecom-production-0120.up.railway.app` (Production - HTTPS)
+- `http://linceecom-production-0120.up.railway.app` (Production - HTTP fallback)
 
 ## 📋 Deployment Steps
 
@@ -42,7 +42,7 @@ The API now accepts requests from:
 
 3. **Test after deployment**:
    ```bash
-   curl -X OPTIONS https://linceecom-production.up.railway.app/api/v1/auth/login \
+   curl -X OPTIONS https://linceecom-production-0120.up.railway.app/api/v1/auth/login \
      -H "Origin: https://your-frontend-domain.com" \
      -H "Access-Control-Request-Method: POST" \
      -H "Access-Control-Request-Headers: Content-Type" \
@@ -53,7 +53,7 @@ The API now accepts requests from:
 
 The API will now return these headers:
 ```
-Access-Control-Allow-Origin: https://linceecom-production.up.railway.app
+Access-Control-Allow-Origin: https://linceecom-production-0120.up.railway.app
 Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS, PATCH, HEAD
 Access-Control-Allow-Headers: Authorization, Content-Type, Accept, Origin
 Access-Control-Allow-Credentials: true
@@ -64,7 +64,7 @@ Access-Control-Max-Age: 3600
 
 ### Fetch API
 ```javascript
-fetch('https://linceecom-production.up.railway.app/api/v1/auth/login', {
+fetch('https://linceecom-production-0120.up.railway.app/api/v1/auth/login', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ fetch('https://linceecom-production.up.railway.app/api/v1/auth/login', {
 
 ### Axios
 ```javascript
-axios.post('https://linceecom-production.up.railway.app/api/v1/auth/login', 
+axios.post('https://linceecom-production-0120.up.railway.app/api/v1/auth/login', 
   { email, password },
   {
     withCredentials: true,
@@ -89,7 +89,7 @@ axios.post('https://linceecom-production.up.railway.app/api/v1/auth/login',
 
 ### Angular HttpClient
 ```typescript
-this.http.post('https://linceecom-production.up.railway.app/api/v1/auth/login',
+this.http.post('https://linceecom-production-0120.up.railway.app/api/v1/auth/login',
   { email, password },
   { 
     withCredentials: true,
@@ -127,7 +127,7 @@ this.http.post('https://linceecom-production.up.railway.app/api/v1/auth/login',
 
 ### Test from Browser Console
 ```javascript
-fetch('https://linceecom-production.up.railway.app/api/v1/products', {
+fetch('https://linceecom-production-0120.up.railway.app/api/v1/products', {
   method: 'GET',
   headers: { 'Content-Type': 'application/json' }
 })
@@ -139,8 +139,8 @@ fetch('https://linceecom-production.up.railway.app/api/v1/products', {
 ### Test Preflight Request
 ```bash
 curl -X OPTIONS \
-  https://linceecom-production.up.railway.app/api/v1/auth/login \
-  -H "Origin: https://linceecom-production.up.railway.app" \
+  https://linceecom-production-0120.up.railway.app/api/v1/auth/login \
+  -H "Origin: https://linceecom-production-0120.up.railway.app" \
   -H "Access-Control-Request-Method: POST" \
   -H "Access-Control-Request-Headers: Content-Type,Authorization" \
   -v
@@ -160,7 +160,7 @@ To allow requests from a new frontend domain:
 ```java
 configuration.setAllowedOrigins(Arrays.asList(
     "http://localhost:3000",
-    "https://linceecom-production.up.railway.app",
+    "https://linceecom-production-0120.up.railway.app",
     "https://your-new-frontend.com"  // Add here
 ));
 ```
@@ -185,8 +185,8 @@ After deploying, verify:
 ## 🔗 Railway Deployment URL
 
 Your API is deployed at:
-- **HTTPS**: `https://linceecom-production.up.railway.app`
-- **API Base**: `https://linceecom-production.up.railway.app/api/v1`
+- **HTTPS**: `https://linceecom-production-0120.up.railway.app`
+- **API Base**: `https://linceecom-production-0120.up.railway.app/api/v1`
 
 ## 📞 Still Having Issues?
 
