@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -81,11 +82,34 @@ public class ImageController {
             @Parameter(description = "Array of image files") @RequestParam("files") MultipartFile[] files,
             @Parameter(description = "Cloudinary folder path") @RequestParam(defaultValue = "products") String folder) {
         try {
+            if (files == null || files.length == 0) {
+                Map<String, Object> error = new HashMap<>();
+                error.put("success", false);
+                error.put("error", "No files provided");
+                return ResponseEntity.badRequest().body(error);
+            }
+
             List<String> imageUrls = new ArrayList<>();
             List<String> failedFiles = new ArrayList<>();
             
             for (MultipartFile file : files) {
                 try {
+                    if (file == null || file.isEmpty()) {
+                        failedFiles.add("Unknown file: File is empty");
+                        continue;
+                    }
+
+                    String contentType = file.getContentType();
+                    if (contentType == null || !contentType.startsWith("image/")) {
+                        failedFiles.add(file.getOriginalFilename() + ": File must be an image (jpeg, png, gif, etc.)");
+                        continue;
+                    }
+
+                    if (file.getSize() > 5 * 1024 * 1024) {
+                        failedFiles.add(file.getOriginalFilename() + ": File size exceeds 5MB limit");
+                        continue;
+                    }
+
                     String imageUrl = cloudinaryService.uploadImage(file, folder);
                     imageUrls.add(imageUrl);
                 } catch (Exception e) {
@@ -94,7 +118,7 @@ public class ImageController {
             }
             
             Map<String, Object> response = new HashMap<>();
-            response.put("success", true);
+            response.put("success", failedFiles.isEmpty());
             response.put("uploadedCount", imageUrls.size());
             response.put("failedCount", failedFiles.size());
             response.put("imageUrls", imageUrls);
@@ -103,7 +127,16 @@ public class ImageController {
             }
             response.put("message", String.format("Uploaded %d of %d images successfully", 
                 imageUrls.size(), files.length));
-            
+
+            if (imageUrls.isEmpty()) {
+                response.put("success", false);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+
+            if (!failedFiles.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(response);
+            }
+
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, Object> error = new HashMap<>();
