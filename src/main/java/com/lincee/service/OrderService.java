@@ -234,6 +234,27 @@ public class OrderService {
         dto.setDeliveryDate(order.getDeliveryDate());
         dto.setCreatedAt(order.getCreatedAt());
         dto.setUpdatedAt(order.getUpdatedAt());
+
+        // Map order items to DTOs
+        if (order.getOrderItems() != null) {
+            java.util.List<com.lincee.dto.OrderItemDTO> itemDTOs = order.getOrderItems().stream().map(item -> {
+                com.lincee.dto.OrderItemDTO itemDTO = new com.lincee.dto.OrderItemDTO();
+                itemDTO.setId(item.getId());
+                itemDTO.setOrderId(order.getId());
+                if (item.getProduct() != null) {
+                    itemDTO.setProductId(item.getProduct().getId());
+                    itemDTO.setProductName(item.getProduct().getName());
+                }
+                itemDTO.setQuantity(item.getQuantity());
+                itemDTO.setUnitPrice(item.getUnitPrice());
+                itemDTO.setDiscountPrice(item.getDiscountPrice());
+                itemDTO.setTotalPrice(item.getTotalPrice());
+                itemDTO.setSize(item.getSize());
+                itemDTO.setColor(item.getColor());
+                return itemDTO;
+            }).collect(java.util.stream.Collectors.toList());
+            dto.setOrderItems(itemDTOs);
+        }
         return dto;
     }
 }
