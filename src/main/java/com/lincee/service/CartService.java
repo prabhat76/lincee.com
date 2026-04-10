@@ -87,15 +87,16 @@ public class CartService {
             throw new com.lincee.exception.ApiException(com.lincee.exception.ErrorCode.INVALID_QUANTITY, "Quantity must be greater than 0");
         }
 
-        // 5. Validate size/color if required
+        // 5. Validate size if required
         if (product.getAvailableSizes() != null && !product.getAvailableSizes().isEmpty()) {
             if (size == null || !product.getAvailableSizes().contains(size)) {
                 throw new com.lincee.exception.ApiException(com.lincee.exception.ErrorCode.VALIDATION_ERROR, "Invalid or missing size");
             }
         }
-        if (product.getAvailableColors() != null && !product.getAvailableColors().isEmpty()) {
-            if (color == null || !product.getAvailableColors().contains(color)) {
-                throw new com.lincee.exception.ApiException(com.lincee.exception.ErrorCode.VALIDATION_ERROR, "Invalid or missing color");
+        // Make color optional: only validate if provided
+        if (color != null && product.getAvailableColors() != null && !product.getAvailableColors().isEmpty()) {
+            if (!product.getAvailableColors().contains(color)) {
+                throw new com.lincee.exception.ApiException(com.lincee.exception.ErrorCode.VALIDATION_ERROR, "Invalid color");
             }
         }
 
