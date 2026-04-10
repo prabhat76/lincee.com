@@ -41,7 +41,30 @@ public class OrderService {
         if (!user.isPresent()) {
             throw new RuntimeException("User not found");
         }
-        
+
+        // Support both 'items' and 'orderItems' in payload
+        if ((orderDTO.getOrderItems() == null || orderDTO.getOrderItems().isEmpty()) &&
+            orderDTO instanceof java.util.Map) {
+            // If deserialized as a Map (e.g., from Jackson), try to extract 'items'
+            Object itemsObj = ((java.util.Map<?, ?>) orderDTO).get("items");
+            if (itemsObj instanceof java.util.List) {
+                @SuppressWarnings("unchecked")
+                java.util.List<java.util.Map<String, Object>> itemsList = (java.util.List<java.util.Map<String, Object>>) itemsObj;
+                java.util.List<OrderItemDTO> mappedItems = itemsList.stream().map(map -> {
+                    OrderItemDTO dto = new OrderItemDTO();
+                    if (map.get("productId") != null) dto.setProductId(Long.valueOf(map.get("productId").toString()));
+                    if (map.get("quantity") != null) dto.setQuantity(Integer.valueOf(map.get("quantity").toString()));
+                    if (map.get("unitPrice") != null) dto.setUnitPrice(new java.math.BigDecimal(map.get("unitPrice").toString()));
+                    if (map.get("discountPrice") != null) dto.setDiscountPrice(new java.math.BigDecimal(map.get("discountPrice").toString()));
+                    if (map.get("totalPrice") != null) dto.setTotalPrice(new java.math.BigDecimal(map.get("totalPrice").toString()));
+                    if (map.get("size") != null) dto.setSize(map.get("size").toString());
+                    if (map.get("color") != null) dto.setColor(map.get("color").toString());
+                    return dto;
+                }).collect(java.util.stream.Collectors.toList());
+                orderDTO.setOrderItems(mappedItems);
+            }
+        }
+
         if (orderDTO.getOrderItems() == null || orderDTO.getOrderItems().isEmpty()) {
             throw new com.lincee.exception.ApiException(
                 com.lincee.exception.ErrorCode.INVALID_ORDER,
