@@ -43,7 +43,10 @@ public class OrderService {
         }
         
         if (orderDTO.getOrderItems() == null || orderDTO.getOrderItems().isEmpty()) {
-            throw new RuntimeException("Order must contain items");
+            throw new com.lincee.exception.ApiException(
+                com.lincee.exception.ErrorCode.INVALID_ORDER,
+                "Order must contain at least one item"
+            );
         }
 
         Order order = new Order();
