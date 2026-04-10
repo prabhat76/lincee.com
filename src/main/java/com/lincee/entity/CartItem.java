@@ -10,10 +10,15 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "cart_items", indexes = {
-    @Index(name = "idx_cart_item_cart_id", columnList = "cart_id"),
-    @Index(name = "idx_cart_item_product_id", columnList = "product_id")
-})
+@Table(name = "cart_items",
+    indexes = {
+        @Index(name = "idx_cart_item_cart_id", columnList = "cart_id"),
+        @Index(name = "idx_cart_item_product_id", columnList = "product_id")
+    },
+    uniqueConstraints = {
+        @UniqueConstraint(name = "uk_cart_product_size_color", columnNames = {"cart_id", "product_id", "size", "color"})
+    }
+)
 public class CartItem {
     
     @Id

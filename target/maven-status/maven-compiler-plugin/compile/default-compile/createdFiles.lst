@@ -58,6 +58,7 @@ com/lincee/controller/DashboardController.class
 com/lincee/LinceeApplication$1.class
 com/lincee/entity/Order$OrderStatus.class
 com/lincee/controller/PaymentController.class
+com/lincee/service/ExcelService$1.class
 com/lincee/controller/DashboardController$5.class
 com/lincee/repository/OrderRepository.class
 com/lincee/service/JwtService.class
